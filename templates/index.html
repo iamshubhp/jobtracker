@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Application Tracker</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div>
+            <h1>🎯 Job Application Tracker</h1>
+            <p class="subtitle">Track your job applications in one place</p>
+          </div>
+          <div class="user-menu">
+            <span class="user-name" id="userName">👋 User</span>
+            <button class="btn-logout" onclick="logout()">Logout</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Stats Dashboard -->
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-number" id="total-apps">0</div>
+          <div class="stat-label">Total Applications</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="applied-count">0</div>
+          <div class="stat-label">Applied</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="interview-count">0</div>
+          <div class="stat-label">Interview</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="offer-count">0</div>
+          <div class="stat-label">Offers</div>
+        </div>
+      </div>
+
+      <!-- Add New Application Button -->
+      <div class="action-bar">
+        <button class="btn-primary" onclick="showAddForm()">
+          + Add New Application
+        </button>
+      </div>
+
+      <!-- Add/Edit Form Modal -->
+      <div id="formModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeForm()">&times;</span>
+          <h2 id="formTitle">Add New Application</h2>
+          <form id="applicationForm">
+            <input type="hidden" id="editId" />
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Company *</label>
+                <input type="text" id="company" required />
+              </div>
+              <div class="form-group">
+                <label>Position *</label>
+                <input type="text" id="position" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Status</label>
+                <select id="status">
+                  <option value="Applied">Applied</option>
+                  <option value="Interview">Interview</option>
+                  <option value="Offer">Offer</option>
+                  <option value="Rejected">Rejected</option>
+                  <option value="Withdrawn">Withdrawn</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Date Applied</label>
+                <input type="date" id="date_applied" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Location</label>
+                <input
+                  type="text"
+                  id="location"
+                  placeholder="e.g., Remote, San Francisco"
+                />
+              </div>
+              <div class="form-group">
+                <label>Salary</label>
+                <input
+                  type="text"
+                  id="salary"
+                  placeholder="e.g., $120k - $150k"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Job URL</label>
+              <input type="url" id="job_url" placeholder="https://..." />
+            </div>
+
+            <div class="form-group">
+              <label>Notes</label>
+              <textarea
+                id="notes"
+                rows="4"
+                placeholder="Add any notes, requirements, contacts, etc."
+              ></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" onclick="closeForm()">
+                Cancel
+              </button>
+              <button type="submit" class="btn-primary">
+                Save Application
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Applications Table -->
+      <div class="table-container">
+        <table id="applicationsTable">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Position</th>
+              <th>Status</th>
+              <th>Date Applied</th>
+              <th>Location</th>
+              <th>Salary</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="applicationsBody">
+            <!-- Applications will be loaded here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

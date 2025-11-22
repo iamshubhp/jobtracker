@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Job Application Tracker</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial, sans-serif;
+        background: #000000;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .auth-container {
+        background: #0a0a0a;
+        padding: 48px;
+        border-radius: 12px;
+        border: 1px solid #1a1a1a;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        width: 100%;
+        max-width: 420px;
+        animation: slideUp 0.3s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .auth-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .auth-header h1 {
+        font-size: 2rem;
+        color: #ffffff;
+        margin-bottom: 10px;
+      }
+
+      .auth-header p {
+        color: #888888;
+        font-size: 0.95rem;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #cccccc;
+        font-size: 0.9rem;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #3a3a3a;
+        border-radius: 10px;
+        font-size: 1rem;
+        background: #0a0a0a;
+        color: #ffffff;
+        transition: border-color 0.3s;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #ffffff;
+      }
+
+      .form-group input.error {
+        border-color: #f44336;
+      }
+
+      .error-message {
+        color: #f44336;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .error-message.show {
+        display: block;
+      }
+
+      .remember-me {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .remember-me input {
+        margin-right: 8px;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
+
+      .remember-me label {
+        font-size: 0.9rem;
+        color: #888888;
+        cursor: pointer;
+      }
+
+      .btn-submit {
+        width: 100%;
+        background: #ffffff;
+        color: #0a0a0a;
+        border: none;
+        padding: 14px;
+        border-radius: 10px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+      }
+
+      .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+        background: #f0f0f0;
+      }
+
+      .btn-submit:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .divider {
+        text-align: center;
+        margin: 25px 0;
+        color: #555555;
+        font-size: 0.9rem;
+      }
+
+      .switch-auth {
+        text-align: center;
+        color: #888888;
+        font-size: 0.95rem;
+      }
+
+      .switch-auth a {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 600;
+        border-bottom: 1px solid #ffffff;
+      }
+
+      .switch-auth a:hover {
+        opacity: 0.7;
+      }
+
+      .alert {
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+        display: none;
+      }
+
+      .alert.show {
+        display: block;
+      }
+
+      .alert-error {
+        background: #ffebee;
+        color: #c62828;
+        border-left: 4px solid #f44336;
+      }
+
+      .alert-success {
+        background: #e8f5e9;
+        color: #2e7d32;
+        border-left: 4px solid #4caf50;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="auth-header">
+        <h1>🎯 Welcome Back!</h1>
+        <p>Sign in to track your job applications</p>
+      </div>
+
+      <div id="alertBox" class="alert"></div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" required autocomplete="email" />
+          <div class="error-message" id="emailError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            required
+            autocomplete="current-password"
+          />
+          <div class="error-message" id="passwordError"></div>
+        </div>
+
+        <div class="remember-me">
+          <input type="checkbox" id="remember" name="remember" />
+          <label for="remember">Remember me</label>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">Sign In</button>
+      </form>
+
+      <div class="divider">───── OR ─────</div>
+
+      <div class="switch-auth">
+        Don't have an account? <a href="/signup">Sign up</a>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById("loginForm");
+      const submitBtn = document.getElementById("submitBtn");
+      const alertBox = document.getElementById("alertBox");
+
+      function showAlert(message, type) {
+        alertBox.textContent = message;
+        alertBox.className = `alert alert-${type} show`;
+        setTimeout(() => {
+          alertBox.classList.remove("show");
+        }, 5000);
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const remember = document.getElementById("remember").checked;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Signing in...";
+
+        try {
+          const response = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password, remember }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            showAlert("Login successful! Redirecting...", "success");
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 1000);
+          } else {
+            showAlert(data.error || "Login failed", "error");
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Sign In";
+          }
+        } catch (error) {
+          showAlert("Network error. Please try again.", "error");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Sign In";
+        }
+      });
+    </script>
+  </body>
+</html>
+`

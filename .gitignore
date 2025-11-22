@@ -1,0 +1,15 @@
+venv/
+
+project1/
+
+__pycache__/
+
+*.pyc
+
+.env
+
+jobs.db
+
+*.db
+
+.DS_Store
